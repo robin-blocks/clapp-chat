@@ -77,9 +77,29 @@ export function ChatLayout() {
     setTimeout(() => setDeletingSession(null), 1000);
   };
 
+  const [pendingMessage, setPendingMessage] = useState<Message | null>(null);
+
   const handleSendMessage = (text: string) => {
+    setPendingMessage({
+      id: `pending-${Date.now()}`,
+      role: "user",
+      content: text,
+      timestamp: new Date().toISOString(),
+    });
     emit("chat.send", { text });
   };
+
+  // Clear pending when server state includes our message
+  useEffect(() => {
+    if (pendingMessage && messages.some(
+      m => m.role === "user" && m.content === pendingMessage.content
+    )) {
+      setPendingMessage(null);
+    }
+  }, [messages, pendingMessage]);
+
+  const displayMessages = pendingMessage ? [...messages, pendingMessage] : messages;
+  const displayLoading = loading || !!pendingMessage;
 
   const handleLoadOlder = () => {
     if (!loadingOlder && hasMore) {
@@ -194,8 +214,8 @@ export function ChatLayout() {
 
         {/* Messages */}
         <ChatMessages
-          messages={messages}
-          loading={loading}
+          messages={displayMessages}
+          loading={displayLoading}
           hasMore={hasMore}
           loadingOlder={loadingOlder}
           onLoadOlder={handleLoadOlder}
