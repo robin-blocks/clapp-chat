@@ -1,0 +1,25 @@
+{
+  "name": "@clapps/chat",
+  "version": "0.1.0",
+  "description": "ChatGPT-style chat interface for OpenClaw",
+  "author": "openclaw",
+  "license": "MIT",
+  "main": "views/chat.app.md",
+  "views": [
+    "views/chat.app.md",
+    "views/default.chat.view.md"
+  ],
+  "components": [
+    "components/ChatLayout.tsx",
+    "components/ChatMessages.tsx",
+    "components/ChatInput.tsx"
+  ],
+  "handlers": [
+    "handlers/chat-handler.ts"
+  ],
+  "openclaw": {
+    "minVersion": "2026.2.0",
+    "permissions": ["sessions", "messages"],
+    "default": true
+  }
+}
