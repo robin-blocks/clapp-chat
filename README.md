@@ -2,6 +2,17 @@
 
 A ChatGPT/Manus-style chat interface for OpenClaw.
 
+**Repo:** https://github.com/robin-blocks/clapp-chat  
+**Parent monorepo:** https://github.com/robin-blocks/clapps
+
+## Installation
+
+This clapp is installed automatically by `@clapps/connect`. To install manually or update:
+
+```bash
+git clone https://github.com/robin-blocks/clapp-chat.git ~/.openclaw/clapps/chat
+```
+
 ## Features
 
 - **Responsive layout**: Sidebar on desktop, burger menu on mobile
@@ -52,10 +63,32 @@ Sessions are stored in `~/.openclaw/workspace/chat-sessions/`:
 | `chat.switchSession` | Switch to a different session |
 | `chat.deleteSession` | Delete a session |
 
-## Customization
+## Development
 
-To customize the chat interface:
+This clapp is a git submodule of the main clapps monorepo. 
 
+**To customize locally:**
 1. Edit files in `~/.openclaw/clapps/chat/`
-2. Changes take effect on reload
-3. To contribute back, push changes and open a PR
+2. Restart the connect server to see changes
+
+**To contribute:**
+```bash
+cd ~/.openclaw/clapps/chat
+git checkout -b my-feature
+# Make changes
+git commit -am "Add my feature"
+git push origin my-feature
+# Open PR at https://github.com/robin-blocks/clapp-chat
+```
+
+**In the parent monorepo:**
+```bash
+# Clone with submodules
+git clone --recurse-submodules https://github.com/robin-blocks/clapps.git
+
+# Sync clapp files into packages for build
+pnpm sync:clapps
+
+# Build
+pnpm build
+```
