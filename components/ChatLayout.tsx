@@ -13,11 +13,22 @@ interface Session {
   messageCount: number;
 }
 
+interface ChatAttachment {
+  id: string;
+  type: "image" | "file";
+  name: string;
+  mimeType: string;
+  size: number;
+  path: string;
+  url: string;
+}
+
 interface Message {
   id: string;
   role: "user" | "assistant" | "system";
   content: string;
   timestamp: string;
+  attachments?: ChatAttachment[];
 }
 
 interface ChatState {
@@ -25,6 +36,7 @@ interface ChatState {
   activeSession: string | null;
   messages: Message[];
   loading: boolean;
+  loadingText?: string;
   loadingOlder?: boolean;
   hasMore?: boolean;
 }
@@ -35,6 +47,7 @@ export function ChatLayout() {
   const activeSession = chatState?.activeSession;
   const messages = chatState?.messages ?? [];
   const loading = chatState?.loading ?? false;
+  const loadingText = chatState?.loadingText ?? "Thinking...";
   const loadingOlder = chatState?.loadingOlder ?? false;
   const hasMore = chatState?.hasMore ?? false;
 
@@ -79,14 +92,19 @@ export function ChatLayout() {
 
   const [pendingMessage, setPendingMessage] = useState<Message | null>(null);
 
-  const handleSendMessage = (text: string) => {
-    setPendingMessage({
-      id: `pending-${Date.now()}`,
-      role: "user",
-      content: text,
-      timestamp: new Date().toISOString(),
-    });
-    emit("chat.send", { text });
+  const handleSendMessage = (
+    text: string,
+    attachments?: Array<{ name: string; mimeType: string; size: number; dataUrl: string }>
+  ) => {
+    if (text.trim()) {
+      setPendingMessage({
+        id: `pending-${Date.now()}`,
+        role: "user",
+        content: text,
+        timestamp: new Date().toISOString(),
+      });
+    }
+    emit("chat.send", { text, attachments: attachments ?? [] });
   };
 
   // Clear pending when server state includes our message
@@ -216,6 +234,7 @@ export function ChatLayout() {
         <ChatMessages
           messages={displayMessages}
           loading={displayLoading}
+          loadingText={loadingText}
           hasMore={hasMore}
           loadingOlder={loadingOlder}
           onLoadOlder={handleLoadOlder}

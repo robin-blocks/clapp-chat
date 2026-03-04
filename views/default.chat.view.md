@@ -19,7 +19,7 @@ ChatLayout():
 | Name | Payload | Description |
 |------|---------|-------------|
 | chat.init | `{}` | Initialize chat and load sessions |
-| chat.send | `{ text: string }` | Send a message |
+| chat.send | `{ text: string, attachments?: Array<{ name: string, mimeType: string, size?: number, dataUrl: string }> }` | Send a message with optional pasted/uploaded images/files |
 | chat.newSession | `{}` | Create a new chat session |
 | chat.switchSession | `{ sessionKey: string }` | Switch to a different session |
 | chat.deleteSession | `{ sessionKey: string }` | Delete a session |
