@@ -147,7 +147,7 @@ function MessageBubble({ message }: { message: Message }) {
                       <img
                         src={attachment.url}
                         alt={attachment.name}
-                        className="rounded-md border border-black/10 dark:border-white/10 max-h-52 object-cover"
+                        className="rounded-md border border-white/10 max-h-52 object-cover"
                         loading="lazy"
                       />
                     </a>
@@ -162,7 +162,7 @@ function MessageBubble({ message }: { message: Message }) {
                     href={attachment.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex items-center gap-2 rounded-md border border-black/10 dark:border-white/10 px-2 py-1.5 text-xs hover:bg-black/5 dark:hover:bg-white/5"
+                    className="flex items-center gap-2 rounded-md border border-white/10 px-2 py-1.5 text-xs hover:bg-white/5"
                   >
                     <Paperclip className="h-3.5 w-3.5" />
                     <span className="truncate">{attachment.name}</span>
@@ -172,20 +172,20 @@ function MessageBubble({ message }: { message: Message }) {
           )}
 
           {message.content && (
-            <div className="prose prose-sm dark:prose-invert max-w-none break-words">
+            <div className="prose prose-sm prose-invert max-w-none break-words">
               <ReactMarkdown
                 components={{
                   code: ({ className, children, ...props }) => {
                     const isInline = !className;
                     if (isInline) {
                       return (
-                        <code className="bg-black/10 dark:bg-white/10 px-1 py-0.5 rounded text-sm" {...props}>
+                        <code className="bg-white/10 px-1 py-0.5 rounded text-sm" {...props}>
                           {children}
                         </code>
                       );
                     }
                     return (
-                      <pre className="bg-black/10 dark:bg-white/10 p-3 rounded-lg overflow-x-auto my-2">
+                      <pre className="bg-white/10 p-3 rounded-lg overflow-x-auto my-2">
                         <code className="text-sm" {...props}>
                           {children}
                         </code>
